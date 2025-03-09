@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Procedural Algorithm - Concept Generator</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="container">
+  <h1>Procedural Algorithm - Concept Generator</h1>
+
+  <div class="canvas-container">
+    <canvas id="terrain-canvas"></canvas>
+    <div id="coord-display">X: 0, Y: 0</div>
+  </div>
+
+  <div class="instructions">
+    <h3>Controls</h3>
+    <ul>
+      <li><span>Left-click:</span> Place selected tile/structure</li>
+      <li><span>Right-click + drag:</span> Pan camera</li>
+      <li><span>Arrow keys or WASD:</span> Move camera</li>
+      <li><span>R:</span> Reset camera position</li>
+    </ul>
+  </div>
+
+  <div class="tool-panel" id="toolPanel">
+    <div class="panel-toggle" id="panelToggle">
+      <div class="arrow-icon blink"></div>
+    </div>
+    <div class="panel-label"></div>
+
+    <div class="controls">
+      <div class="control-sliders">
+        <div class="control-group">
+          <label for="grid-size">Tile Size:</label>
+          <input type="range" id="grid-size" min="20" max="60" value="40">
+          <span id="grid-size-value">40px</span>
+        </div>
+
+        <div class="control-group">
+          <label for="noise-scale">Noise Scale:</label>
+          <input type="range" id="noise-scale" min="5" max="50" value="20">
+          <span id="noise-scale-value">20</span>
+        </div>
+
+        <div class="control-group">
+          <label for="water-level">Water Level:</label>
+          <input type="range" id="water-level" min="0" max="75" value="30">
+          <span id="water-level-value">30%</span>
+        </div>
+      </div>
+
+      <div class="control-buttons">
+        <button id="generate-btn" class="btn">Generate New Terrain</button>
+        <button id="save-btn" class="btn">Save Image</button>
+      </div>
+    </div>
+
+    <div class="placement-tools">
+      <div class="tool-section">
+        <h3>Terrain Types</h3>
+        <div class="tool-options">
+          <div class="tool-option active" data-type="ground">
+            <div class="tool-icon ground-icon"></div>
+            <div class="tool-label">Ground</div>
+          </div>
+          <div class="tool-option" data-type="water">
+            <div class="tool-icon water-icon"></div>
+            <div class="tool-label">Water</div>
+          </div>
+          <div class="tool-option" data-type="mountain">
+            <div class="tool-icon mountain-icon"></div>
+            <div class="tool-label">Mountain</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-section">
+        <h3>Vegetation</h3>
+        <div class="tool-options">
+          <div class="tool-option" data-type="forest">
+            <div class="tool-icon forest-icon"></div>
+            <div class="tool-label">Deciduous</div>
+          </div>
+          <div class="tool-option" data-type="conifer">
+            <div class="tool-icon conifer-icon"></div>
+            <div class="tool-label">Conifer</div>
+          </div>
+          <div class="tool-option" data-type="palm">
+            <div class="tool-icon palm-icon"></div>
+            <div class="tool-label">Palm</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-section">
+        <h3>Structures</h3>
+        <div class="tool-options">
+          <div class="tool-option" data-type="cube">
+            <div class="tool-icon cube-icon"></div>
+            <div class="tool-label">Cube</div>
+          </div>
+          <div class="tool-option" data-type="pyramid">
+            <div class="tool-icon pyramid-icon"></div>
+            <div class="tool-label">Pyramid</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-section">
+        <h3>Selection Size</h3>
+        <div class="size-buttons">
+          <button id="size-1" class="size-btn active">1×1</button>
+          <button id="size-2" class="size-btn">2×2</button>
+          <button id="size-3" class="size-btn">3×3</button>
+        </div>
+        <div id="selection-size-display">Selection: 1×1</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/enhanced-structure-grouping.js"></script>
+<script src="js/geometric-shapes.js"></script>
+<script src="js/integration.js"></script>
+</body>
+</html>
