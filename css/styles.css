@@ -1,0 +1,581 @@
+/* General Styles */
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&display=swap');
+
+body {
+    font-family: 'Anonymous Pro', monospace;
+    margin: 0;
+    padding: 0 0 60px 0; /* Reduced padding for collapsed panel */
+    background-color: #111;
+    color: #e0e0e0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 60px); /* Adjust for the smaller fixed tool panel */
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #aaff00;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+/* Instructions */
+.instructions {
+    background-color: #1a1a1a;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.instructions h3 {
+    margin-top: 0;
+    color: #aaff00;
+    border-bottom: 1px solid #444;
+    padding-bottom: 5px;
+    font-size: 16px;
+}
+
+.instructions ul {
+    padding-left: 20px;
+    color: #b0b0b0;
+    margin-bottom: 0;
+    list-style-type: none;
+}
+
+.instructions li {
+    margin-bottom: 4px;
+    position: relative;
+    padding-left: 5px;
+}
+
+.instructions li::before {
+    content: "•";
+    color: #aaff00;
+    position: absolute;
+    left: -15px;
+}
+
+.instructions li span {
+    color: #aaff00;
+    font-weight: bold;
+}
+
+/* Canvas Container */
+.canvas-container {
+    position: relative;
+    margin-bottom: 20px;
+    background-color: #111;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    flex-grow: 1;
+    overflow: hidden;
+    border: 1px solid #333;
+}
+
+canvas {
+    display: block;
+    margin: 0 auto;
+    cursor: default;
+    background-color: #222;
+}
+
+#coord-display {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+/* Controls - Bottom sliders and buttons */
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    background-color: #1a1a1a;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    justify-content: space-between;
+    align-items: center;
+    transition: opacity 0.3s ease;
+}
+
+.control-sliders {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    flex: 3;
+}
+
+.control-buttons {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.control-group label {
+    font-weight: bold;
+    color: #aaff00;
+    width: 80px;
+}
+
+.control-group input[type="range"] {
+    flex: 1;
+    background-color: #333;
+    border: none;
+    height: 6px;
+    border-radius: 3px;
+    accent-color: #aaff00;
+}
+
+.control-group span {
+    color: #b0b0b0;
+    min-width: 40px;
+    text-align: right;
+}
+
+.btn {
+    background-color: #aaff00;
+    color: #111;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Anonymous Pro', monospace;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #aaff00;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Collapsible Tool Panel */
+.tool-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(30, 30, 30, 0.96);
+    z-index: 100;
+    border-top: 1px solid #444;
+    backdrop-filter: blur(5px);
+    border-radius: 8px 8px 0 0;
+    margin: 0 15px 0 15px;
+    width: calc(100% - 30px);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    transform: translateY(calc(100% - 40px));
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    padding: 15px;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.tool-panel.expanded {
+    transform: translateY(0);
+}
+
+.panel-toggle {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 30px;
+    background-color: rgba(30, 30, 30, 0.96);
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.arrow-icon {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #ffffff;
+    transition: transform 0.3s ease;
+}
+
+.expanded .arrow-icon {
+    transform: rotate(180deg);
+}
+
+/* Blinking animation for arrow */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.blink {
+    animation: blink 1.5s ease-in-out infinite;
+}
+
+/* Panel pull tab text */
+.panel-label {
+    color: #aaff00;
+    font-size: 12px;
+    margin-top: 0;
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    top: -15px;
+}
+
+/* Placement Tools */
+.placement-tools {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-direction: row;
+    gap: 15px;
+    margin-top: 10px;
+    transition: opacity 0.3s ease;
+}
+
+.tool-section {
+    flex: 1;
+    min-width: auto;
+}
+
+.tool-section h3 {
+    color: #aaff00;
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 5px;
+    font-size: 14px;
+}
+
+/* Options matching the reference image */
+.tool-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tool-option {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #333;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    height: 20px;
+}
+
+.tool-option:hover {
+    background-color: #444;
+    transform: translateY(-2px);
+}
+
+.tool-option.active {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.tool-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    border-radius: 2px;
+    position: relative;
+}
+
+.tool-label {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+/* Size buttons matching the reference image */
+.size-buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.size-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    padding: 10px;
+    background-color: #333;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #fff;
+    font-family: 'Anonymous Pro', monospace;
+    font-size: 14px;
+}
+
+.size-btn:hover {
+    background-color: #444;
+    transform: translateY(-2px);
+}
+
+.size-btn.active {
+    background-color: #aaff00;
+    color: #000000;
+}
+
+#selection-size-display {
+    color: #ccc;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+/* Style the icons */
+.ground-icon {
+    background: linear-gradient(to right, #8BC34A 70%, #689F38 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.water-icon {
+    background: linear-gradient(to right, #2196F3 70%, #1976D2 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.mountain-icon {
+    background: linear-gradient(to right, #9E9E9E 70%, #757575 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.forest-icon {
+    background: linear-gradient(to right, #4CAF50 70%, #388E3C 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.conifer-icon {
+    background: linear-gradient(to right, #2E7D32 70%, #1B5E20 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.palm-icon {
+    background: linear-gradient(to right, #FFB300 70%, #FFA000 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.cube-icon {
+    background: linear-gradient(to right, #FF9800 70%, #F57C00 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.pyramid-icon {
+    background: linear-gradient(to right, #FF5722 70%, #E64A19 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+/* Enhance icon styles with subtle details */
+.ground-icon::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 1px;
+    background-color: rgba(255,255,255,0.4);
+    bottom: 3px;
+    left: 3px;
+}
+
+.water-icon::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.4);
+    top: 7px;
+    left: 3px;
+}
+
+.mountain-icon::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 8px solid rgba(255,255,255,0.4);
+    top: 4px;
+    left: 4px;
+}
+
+.forest-icon::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.4);
+    top: 4px;
+    left: 4px;
+}
+
+.conifer-icon::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 10px solid rgba(255,255,255,0.4);
+    top: 3px;
+    left: 4px;
+}
+
+.palm-icon::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 8px;
+    background-color: rgba(255,255,255,0.4);
+    top: 4px;
+    left: 7px;
+}
+
+.cube-icon::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: rgba(255,255,255,0.4);
+    top: 5px;
+    left: 5px;
+}
+
+.pyramid-icon::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 8px solid rgba(255,255,255,0.4);
+    top: 4px;
+    left: 4px;
+}
+
+/* Add animations and transitions for better visual feedback */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.tool-option, .size-btn {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.tool-option.active, .size-btn.active {
+    animation: pulse 3s infinite ease-in-out;
+}
+
+/* Create a highlight effect on hover */
+.tool-option:hover::before, .size-btn:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+    pointer-events: none;
+}
+
+/* Ripple effect */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ffffff;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
+}
+
+/* Media query for better responsiveness */
+@media (max-width: 768px) {
+    .placement-tools {
+        flex-direction: column;
+    }
+
+    .controls {
+        flex-direction: column;
+    }
+
+    .control-buttons {
+        margin-top: 15px;
+        justify-content: center;
+    }
+}
